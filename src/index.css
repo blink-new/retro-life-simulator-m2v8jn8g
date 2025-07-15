@@ -1,0 +1,422 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 6%;
+    --foreground: 120 100% 53%;
+    --card: 240 10% 8%;
+    --card-foreground: 120 100% 53%;
+    --popover: 240 10% 8%;
+    --popover-foreground: 120 100% 53%;
+    --primary: 120 100% 53%;
+    --primary-foreground: 240 10% 6%;
+    --secondary: 258 90% 66%;
+    --secondary-foreground: 240 10% 6%;
+    --muted: 240 10% 12%;
+    --muted-foreground: 120 50% 70%;
+    --accent: 258 90% 66%;
+    --accent-foreground: 240 10% 6%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 10% 15%;
+    --input: 240 10% 15%;
+    --ring: 120 100% 53%;
+    --radius: 0.5rem;
+    --violet: 258 90% 66%;
+    --violet-dark: 258 39% 20%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans;
+
+    background: linear-gradient(135deg, hsl(240deg 10% 6%) 0%, hsl(258deg 39% 8%) 100%);
+    min-height: 100vh;
+  }
+  
+  .ghost-glow {
+    box-shadow: 0 0 20px hsl(120deg 100% 53% / 30%), 0 0 40px hsl(120deg 100% 53% / 10%);
+    transition: all 0.3s ease;
+  }
+  
+  .ghost-glow:hover {
+    box-shadow: 0 0 30px hsl(120deg 100% 53% / 50%), 0 0 60px hsl(120deg 100% 53% / 20%);
+    transform: translateY(-2px);
+  }
+  
+  .violet-glow {
+    box-shadow: 0 0 20px hsl(258deg 90% 66% / 30%), 0 0 40px hsl(258deg 90% 66% / 10%);
+    transition: all 0.3s ease;
+  }
+  
+  .violet-glow:hover {
+    box-shadow: 0 0 30px hsl(258deg 90% 66% / 50%), 0 0 60px hsl(258deg 90% 66% / 20%);
+    transform: translateY(-2px);
+  }
+  
+  .hunter-glow {
+    box-shadow: 0 0 15px hsl(120deg 100% 53% / 40%), 0 0 30px hsl(120deg 100% 53% / 15%);
+    animation: hunter-pulse 2s ease-in-out infinite alternate;
+  }
+  
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+  
+  .violet-pulse {
+    animation: violet-pulse 2s ease-in-out infinite alternate;
+  }
+  
+  .radar-pulse {
+    animation: radar-pulse 3s ease-in-out infinite;
+  }
+  
+  .ghost-flicker {
+    animation: ghost-flicker 1s ease-in-out infinite alternate;
+  }
+  
+  .horror-text {
+    text-shadow: 0 0 10px hsl(120deg 100% 53% / 50%);
+    animation: horror-glow 3s ease-in-out infinite alternate;
+  }
+  
+  .violet-text {
+    text-shadow: 0 0 10px hsl(258deg 90% 66% / 50%);
+  }
+  
+  .combat-zone {
+    background: radial-gradient(circle at center, hsl(258deg 39% 8% / 50%) 0%, hsl(240deg 10% 6%) 100%);
+    border: 2px solid hsl(120deg 100% 53% / 20%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .combat-zone::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(90deg, transparent 0%, hsl(120deg 100% 53% / 5%) 50%, transparent 100%),
+      linear-gradient(0deg, transparent 0%, hsl(258deg 90% 66% / 5%) 50%, transparent 100%);
+    animation: combat-scan 4s linear infinite;
+    pointer-events: none;
+  }
+  
+  .hunter-card {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hunter-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(120deg 100% 53% / 10%), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .hunter-card:hover::before {
+    left: 100%;
+  }
+  
+  .hunter-card:hover {
+    border-color: hsl(258deg 90% 66%);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px hsl(258deg 90% 66% / 20%);
+  }
+  
+  .hunter-card.selected {
+    border-color: hsl(120deg 100% 53%);
+    background: linear-gradient(135deg, hsl(120deg 100% 53% / 10%) 0%, hsl(258deg 90% 66% / 10%) 100%);
+    box-shadow: 0 0 20px hsl(120deg 100% 53% / 30%);
+  }
+  
+  /* Combat specific animations */
+  .battle-grid {
+    background-image: 
+      linear-gradient(hsl(120deg 100% 53% / 10%) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(120deg 100% 53% / 10%) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: grid-pulse 4s ease-in-out infinite;
+  }
+  
+  .damage-number {
+    animation: damage-float 2s ease-out forwards;
+    pointer-events: none;
+  }
+  
+  .critical-hit {
+    animation: critical-flash 0.5s ease-out;
+  }
+  
+  .energy-bar {
+    background: linear-gradient(90deg, hsl(45deg 100% 50%), hsl(60deg 100% 50%));
+    box-shadow: 0 0 10px hsl(45deg 100% 50% / 30%);
+  }
+  
+  .health-bar {
+    background: linear-gradient(90deg, hsl(0deg 100% 50%), hsl(15deg 100% 50%));
+    box-shadow: 0 0 10px hsl(0deg 100% 50% / 30%);
+  }
+  
+  .shield-bar {
+    background: linear-gradient(90deg, hsl(200deg 100% 50%), hsl(220deg 100% 50%));
+    box-shadow: 0 0 10px hsl(200deg 100% 50% / 30%);
+  }
+  
+  /* Status effects */
+  .stunned {
+    animation: stun-shake 0.5s ease-in-out infinite;
+  }
+  
+  .defending {
+    animation: defend-glow 1s ease-in-out infinite alternate;
+  }
+  
+  .attacking {
+    animation: attack-surge 0.8s ease-out;
+  }
+  
+  /* Particle effects */
+  .combat-particles {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: hsl(120deg 100% 53%);
+    border-radius: 50%;
+    animation: particle-float 3s linear infinite;
+  }
+  
+  .combat-particles:nth-child(2n) {
+    background: hsl(258deg 90% 66%);
+    animation-delay: -1s;
+  }
+  
+  .combat-particles:nth-child(3n) {
+    animation-delay: -2s;
+  }
+}
+
+@keyframes hunter-pulse {
+  0% {
+    box-shadow: 0 0 15px hsl(120deg 100% 53% / 40%), 0 0 30px hsl(120deg 100% 53% / 15%);
+  }
+
+  100% {
+    box-shadow: 0 0 25px hsl(120deg 100% 53% / 60%), 0 0 50px hsl(120deg 100% 53% / 25%);
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 20px hsl(120deg 100% 53% / 30%), 0 0 40px hsl(120deg 100% 53% / 10%);
+  }
+
+  100% {
+    box-shadow: 0 0 30px hsl(120deg 100% 53% / 50%), 0 0 60px hsl(120deg 100% 53% / 20%);
+  }
+}
+
+@keyframes violet-pulse {
+  0% {
+    box-shadow: 0 0 20px hsl(258deg 90% 66% / 30%), 0 0 40px hsl(258deg 90% 66% / 10%);
+  }
+
+  100% {
+    box-shadow: 0 0 30px hsl(258deg 90% 66% / 50%), 0 0 60px hsl(258deg 90% 66% / 20%);
+  }
+}
+
+@keyframes radar-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 100%;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 70%;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 100%;
+  }
+}
+
+@keyframes ghost-flicker {
+  0% {
+    opacity: 70%;
+    filter: brightness(0.8);
+  }
+
+  100% {
+    opacity: 100%;
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes horror-glow {
+  0% {
+    text-shadow: 0 0 10px hsl(120deg 100% 53% / 50%);
+  }
+
+  100% {
+    text-shadow: 0 0 20px hsl(120deg 100% 53% / 80%), 0 0 30px hsl(120deg 100% 53% / 40%);
+  }
+}
+
+@keyframes combat-scan {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes grid-pulse {
+  0%, 100% {
+    opacity: 10%;
+  }
+
+  50% {
+    opacity: 30%;
+  }
+}
+
+@keyframes damage-float {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 100%;
+  }
+
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 100%;
+  }
+
+  100% {
+    transform: translateY(-40px) scale(0.8);
+    opacity: 0%;
+  }
+}
+
+@keyframes critical-flash {
+  0%, 100% {
+    background-color: transparent;
+  }
+
+  50% {
+    background-color: hsl(0deg 100% 50% / 20%);
+  }
+}
+
+@keyframes stun-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-2px);
+  }
+
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes defend-glow {
+  0% {
+    box-shadow: 0 0 15px hsl(200deg 100% 50% / 30%);
+  }
+
+  100% {
+    box-shadow: 0 0 25px hsl(200deg 100% 50% / 60%);
+  }
+}
+
+@keyframes attack-surge {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+    filter: brightness(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0%;
+  }
+
+  10% {
+    opacity: 100%;
+  }
+
+  90% {
+    opacity: 100%;
+  }
+
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0%;
+  }
+}
+
+/* Responsive adjustments */
+@media (width <= 768px) {
+  .combat-zone {
+    height: 250px;
+  }
+  
+  .hunter-card {
+    padding: 1rem;
+  }
+  
+  .horror-text {
+    font-size: 2rem;
+  }
+}
+
+/* Custom scrollbar for combat log */
+.combat-log::-webkit-scrollbar {
+  width: 4px;
+}
+
+.combat-log::-webkit-scrollbar-track {
+  background: hsl(240deg 10% 12%);
+}
+
+.combat-log::-webkit-scrollbar-thumb {
+  background: hsl(120deg 100% 53% / 30%);
+  border-radius: 2px;
+}
+
+.combat-log::-webkit-scrollbar-thumb:hover {
+  background: hsl(120deg 100% 53% / 50%);
+}
